@@ -7,9 +7,7 @@ export default function Header() {
     <div className="mb-3">
       <Nav pills>
         <NavItem>
-          <NavLink href="/" active>
-            Home
-          </NavLink>
+          <NavLink href="/">Home</NavLink>
         </NavItem>
         <NavItem>
           <NavLink href="/feedback">New Candidate</NavLink>
