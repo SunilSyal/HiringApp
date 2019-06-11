@@ -1,5 +1,6 @@
 import Layout from "../components/MyLayout";
 import Feedback from "../components/feedback";
+import fetch from "isomorphic-unfetch";
 
 class FeedbackPage extends React.Component {
   constructor(props) {
@@ -13,16 +14,12 @@ class FeedbackPage extends React.Component {
     this.setState({ cId: event.target.value });
   }
 
-  static async getInitialProps(context) {
-    const { id } = context.query;
-    const res = await fetch(`https://api.tvmaze.com/shows/${id}`);
-    const show = await res.json();
-
-    console.log(`================Fetched show: ${show.name}`);
-    show.disabled = false;
-
-    return { show };
-  }
+  // static async getInitialProps(context) {
+  //   const { id } = context.query;
+  //   const res = await fetch(`https://api.tvmaze.com/shows/${id}`);
+  //   const show = await res.json();
+  //   return { show };
+  // }
 
   render() {
     return (

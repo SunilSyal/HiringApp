@@ -1,5 +1,7 @@
 const express = require("express");
 const next = require("next");
+const mongo = require("./apis/mongoConnection");
+const bodyParser = require("body-parser");
 
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
@@ -9,11 +11,21 @@ app
   .prepare()
   .then(() => {
     const server = express();
+    mongo.connectMongo();
+
+    server.use(bodyParser.json());
 
     server.get("/f/:id?", (req, res) => {
       const actualPage = "/feedback";
       const queryParams = { id: req.params.id };
       app.render(req, res, actualPage, queryParams);
+    });
+
+    server.post("/api/pipeline", (req, res) => {
+      var query = req.body.query;
+      mongo.fetchPipeline(query).then(data => {
+        res.json(data);
+      });
     });
 
     server.get("*", (req, res) => {

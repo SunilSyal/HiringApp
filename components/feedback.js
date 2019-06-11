@@ -1,5 +1,4 @@
 import { withRouter } from "next/router";
-import Sample from "../templates/sample";
 import Rating from "../templates/rating";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 
@@ -137,7 +136,7 @@ class FeedbackClass extends React.Component {
 
         <FormGroup className="row mb-3">
           {this.getFeedbackList().map((item, index) => (
-            <FormGroup className="col-xs-12 col-sm-4">
+            <FormGroup key={index} className="col-xs-12 col-sm-4">
               <Rating title={item.title} id={item.id} />
             </FormGroup>
           ))}
@@ -153,7 +152,6 @@ class FeedbackClass extends React.Component {
         </FormGroup>
 
         <Button>Submit</Button>
-        {this.props.router.query.id ? <Sample {...this.props} /> : null}
       </Form>
     );
   }
