@@ -1,9 +1,55 @@
 import { withRouter } from "next/router";
-import fetch from "isomorphic-unfetch";
 import Sample from "../templates/sample";
+import Rating from "../templates/rating";
 import { Button, Form, FormGroup, Label, Input, FormText } from "reactstrap";
 
 class FeedbackClass extends React.Component {
+  constructor() {
+    super();
+    this.getFeedbackList = this.getFeedbackList.bind(this);
+  }
+
+  getFeedbackList() {
+    return [
+      {
+        title: "HTML | RWD | Templating",
+        id: "html"
+      },
+      {
+        title: "CSS preprocessors",
+        id: "CSS"
+      },
+      {
+        title: "Javascript",
+        id: "js"
+      },
+      {
+        title: "OOPs",
+        id: "oops"
+      },
+      {
+        title: "Accessibility",
+        id: "access"
+      },
+      {
+        title: "Debugging",
+        id: "debug"
+      },
+      {
+        title: "Estimation / Planning",
+        id: "est"
+      },
+      {
+        title: "Communication",
+        id: "comm"
+      },
+      {
+        title: "Learning Agility",
+        id: "learning"
+      }
+    ];
+  }
+
   render() {
     return (
       <Form>
@@ -52,9 +98,49 @@ class FeedbackClass extends React.Component {
           </FormGroup>
         </FormGroup>
 
-        <FormGroup className="col-xs-12 mb-3">
-          <Label for="feedback">Feedback</Label>
-          <Input type="textarea" name="feedback" id="feedback" />
+        <FormGroup className="row mb-3">
+          <FormGroup className="col-md-3 col-sm-12">
+            <Label for="panel">Panel</Label>
+            <Input
+              type="select"
+              name="panel"
+              id="panel"
+              disabled={this.props.router.query.id}
+            >
+              <option>Sailesh Raghvan</option>
+              <option>Sunil Syal</option>
+              <option>Ajay Singh</option>
+            </Input>
+          </FormGroup>
+
+          <FormGroup className="col-md-3 col-sm-12">
+            <Label for="panel">Framework</Label>
+            <Input type="select" name="framework" id="framework">
+              <option>Core XT</option>
+              <option>Angular</option>
+              <option>React</option>
+            </Input>
+          </FormGroup>
+        </FormGroup>
+
+        <FormGroup className="row">
+          <FormGroup className="col-xs-12 col-sm-6 mb-3">
+            <Label for="feedback">Domain Feedback</Label>
+            <Input type="textarea" name="domain" id="domain" />
+          </FormGroup>
+
+          <FormGroup className="col-xs-12 col-sm-6 mb-3">
+            <Label for="feedback">Framework experience</Label>
+            <Input type="textarea" name="frame" id="frame" />
+          </FormGroup>
+        </FormGroup>
+
+        <FormGroup className="row mb-3">
+          {this.getFeedbackList().map((item, index) => (
+            <FormGroup className="col-xs-12 col-sm-4">
+              <Rating title={item.title} id={item.id} />
+            </FormGroup>
+          ))}
         </FormGroup>
 
         <FormGroup>

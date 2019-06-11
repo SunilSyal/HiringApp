@@ -2,6 +2,7 @@ import Layout from "../components/MyLayout.js";
 import Link from "next/link";
 import { withRouter } from "next/router";
 import { Button, Table } from "reactstrap";
+import { FaEdit } from "react-icons/fa";
 
 function getPosts() {
   return [
@@ -12,6 +13,7 @@ function getPosts() {
       pName: "Sailesh",
       date: "25-Jun-2019",
       inFor: "SAL 1",
+      framework: "Core XT",
       status: "selected",
       proposedTitle: "AL 2"
     },
@@ -22,6 +24,7 @@ function getPosts() {
       pName: "Sunil",
       date: "25-Jun-2019",
       inFor: "SAL 1",
+      framework: "Core XT",
       status: "selected",
       proposedTitle: "AL 2"
     },
@@ -32,6 +35,7 @@ function getPosts() {
       pName: "Shelly",
       date: "25-Jun-2019",
       inFor: "SAL 1",
+      framework: "Core XT",
       status: "selected",
       proposedTitle: "AL 2"
     }
@@ -47,30 +51,38 @@ const PostLink = ({ post, index }) => (
       </Link>
     </td>
     <td>
-      <Link href={`/panel?id=${post.pId}`}>
-        <Button color="link">{post.pName}</Button>
-      </Link>
+      <p color="link">{post.pName}</p>
     </td>
     <td>
-      <Button color="link">{post.date}</Button>
+      <p color="link">{post.date}</p>
     </td>
 
     <td className="align-middle">
       <p color="link">{post.inFor}</p>
     </td>
+
+    <td className="align-middle">
+      <p color="link">{post.framework}</p>
+    </td>
+
     <td className="align-middle">
       <p color="link">{post.status}</p>
     </td>
     <td className="align-middle">
       <p color="link">{post.proposedTitle}</p>
     </td>
+    <td>
+      <Link href={`/feedback?id=${post.cId}`}>
+        <FaEdit />
+      </Link>
+    </td>
   </tr>
 );
 
-function Blog() {
+function Candidates() {
   return (
     <Layout>
-      <h1>Schedules Candidates List</h1>
+      <h1>Scheduled Candidates</h1>
       <Table size="sm">
         <tbody>
           <tr>
@@ -90,10 +102,16 @@ function Blog() {
               <p color="link">Interviewed for</p>
             </td>
             <td className="align-top">
+              <p color="link">Framework</p>
+            </td>
+            <td className="align-top">
               <p color="link">Status</p>
             </td>
             <td className="align-top">
               <p color="link">Proposed Title</p>
+            </td>
+            <td className="align-top">
+              <p color="link">Edit</p>
             </td>
           </tr>
 
@@ -102,32 +120,8 @@ function Blog() {
           ))}
         </tbody>
       </Table>
-      <style jsx>{`
-        h1,
-        a {
-          font-family: "Arial";
-        }
-
-        ul {
-          padding: 0;
-        }
-
-        li {
-          list-style: none;
-          margin: 5px 0;
-        }
-
-        a {
-          text-decoration: none;
-          color: blue;
-        }
-
-        a:hover {
-          opacity: 0.6;
-        }
-      `}</style>
     </Layout>
   );
 }
 
-export default withRouter(Blog);
+export default withRouter(Candidates);
