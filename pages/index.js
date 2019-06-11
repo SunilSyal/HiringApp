@@ -1,8 +1,6 @@
 import Layout from "../components/MyLayout.js";
-import Link from "next/link";
 import { withRouter } from "next/router";
-import { Button, Table } from "reactstrap";
-import { FaEdit } from "react-icons/fa";
+import { Table, FormGroup, Label, Input } from "reactstrap";
 import fetch from "isomorphic-unfetch";
 import CandidateRow from "../components/candidate-row";
 
@@ -12,31 +10,76 @@ class Candidates extends React.Component {
     this.state = { ...props };
 
     this.getPosts = this.getPosts.bind(this);
+    this.filterRecords = this.filterRecords.bind(this);
+    this.fetchRecords = this.fetchRecords.bind(this);
   }
 
   getPosts() {
     return this.state.data;
   }
 
+  filterRecords(event) {
+    var str = event.target.value;
+    this.setState({ filter: str });
+    this.fetchRecords(str);
+  }
+
   static async getInitialProps({ req }) {
     const baseUrl = req ? `${req.protocol}://${req.get("Host")}` : "";
     const params = {
-      query: "Ajay"
+      allRecords: true
     };
     const res = await fetch(baseUrl + "/api/pipeline", {
       method: "post",
       body: JSON.stringify(params),
       headers: { "Content-type": "application/json" }
     });
-    const data = await res.json();
+    var data = await res.json();
+    data.req = req;
     return { data };
+  }
+
+  async fetchRecords(str) {
+    const baseUrl = this.state.req
+      ? `${this.state.req.protocol}://${this.state.req.get("Host")}`
+      : "";
+    const params = {
+      query: str
+    };
+    const res = await fetch(baseUrl + "/api/pipeline", {
+      method: "post",
+      body: JSON.stringify(params),
+      headers: { "Content-type": "application/json" }
+    });
+
+    var temp = await res.json();
+    this.setState({ data: temp });
   }
 
   render() {
     return (
       <Layout>
         <h1>Scheduled Candidates</h1>
-        <Table size="sm">
+        <FormGroup className="col-xs-12 col-sm-6 row">
+          <Label for="filter" className="sr-only">
+            Filter
+          </Label>
+          <Input
+            type="text"
+            name="filter"
+            id="filter"
+            placeholder="Enter a search string"
+            value={this.props.filter}
+            onChange={this.filterRecords}
+          />
+        </FormGroup>
+        <h2 className={!this.state.data.length ? "d-block" : "d-none"}>
+          No record found for <b>{this.state.filter}</b>
+        </h2>
+        <Table
+          size="sm"
+          className={this.state.data.length ? "table" : "d-none"}
+        >
           <tbody>
             <tr>
               <th className="align-top" scope="row">

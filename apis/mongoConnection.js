@@ -15,22 +15,24 @@ async function connectMongo() {
   }
   console.log("Successfully connected to Mongo !!!");
 }
-async function fetchPipeline(query = {}) {
-  const client = await MongoClient.connect(url, {
-    useNewUrlParser: true
-  }).catch(err => {
-    console.log(err);
-  });
+async function fetchPipeline(params) {
   try {
     const db = client.db("hiring");
     let collection = db.collection("pipeline");
-    var regex = new RegExp(query);
-    let res = await collection.find({ cName: regex }).toArray();
+    collection.createIndex({ "$**": "text" });
+
+    let res = await collection
+      .find(
+        params.allRecords || !params.query
+          ? {}
+          : { $text: { $search: params.query } }
+      )
+      .sort({ cName: 1 })
+      .toArray();
     return res;
   } catch (err) {
     console.log(err);
-  } finally {
-    client.close();
+    return []; // Return empty array in case of any error
   }
 }
 
