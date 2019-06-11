@@ -24,7 +24,8 @@ async function fetchPipeline(query = {}) {
   try {
     const db = client.db("hiring");
     let collection = db.collection("pipeline");
-    let res = await collection.find(query).toArray();
+    var regex = new RegExp(query);
+    let res = await collection.find({ cName: regex }).toArray();
     return res;
   } catch (err) {
     console.log(err);

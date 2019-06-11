@@ -22,8 +22,7 @@ app
     });
 
     server.post("/api/pipeline", (req, res) => {
-      var query = req.body.query;
-      mongo.fetchPipeline(query).then(data => {
+      mongo.fetchPipeline(req.body.query).then(data => {
         res.json(data);
       });
     });

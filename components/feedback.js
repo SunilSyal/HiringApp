@@ -89,6 +89,7 @@ class FeedbackClass extends React.Component {
           <FormGroup className="col-md-3 col-sm-12">
             <Label for="selectedTitle">Selected As</Label>
             <Input type="select" name="selectedTitle" id="selectedTitle">
+              <option>-</option>
               <option>AL 1</option>
               <option>AL 2</option>
               <option>SAL 1</option>

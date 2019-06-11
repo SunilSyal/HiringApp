@@ -21,9 +21,7 @@ class Candidates extends React.Component {
   static async getInitialProps({ req }) {
     const baseUrl = req ? `${req.protocol}://${req.get("Host")}` : "";
     const params = {
-      query: {
-        cName: "Ajay Kumar"
-      }
+      query: "Ajay"
     };
     const res = await fetch(baseUrl + "/api/pipeline", {
       method: "post",

@@ -32545,9 +32545,7 @@ function (_React$Component) {
                 req = _ref.req;
                 baseUrl = req ? "".concat(req.protocol, "://").concat(req.get("Host")) : "";
                 params = {
-                  query: {
-                    cName: "Ajay Kumar"
-                  }
+                  query: "Ajay"
                 };
                 _context.next = 5;
                 return isomorphic_unfetch__WEBPACK_IMPORTED_MODULE_16___default()(baseUrl + "/api/pipeline", {
