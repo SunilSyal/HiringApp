@@ -19,7 +19,7 @@
     "isomorphic-unfetch": "^3.0.0",
     "mongo-sql": "^6.2.0",
     "mongodb": "^3.2.7",
-    "next": "^8.0.3",
+    "next": "^13.1.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-icons": "^3.7.0",
